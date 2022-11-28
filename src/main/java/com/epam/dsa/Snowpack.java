@@ -9,6 +9,12 @@ public class Snowpack {
 		
 		int[] b = {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1};
 		System.out.println("Snow trapped is " + calculateTrappedSnow(b) + " unit(s).");
+		
+		int[] c = { 0, 1, 3, 0, 1, 2, 0, 4, 2, 0, 3, 0 };
+		System.out.println("Snow trapped is " + calculateTrappedSnowWithExtraSpace(c) + " unit(s).");
+
+		int[] d = { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 };
+		System.out.println("Snow trapped is " + calculateTrappedSnowWithExtraSpace(d) + " unit(s).");
 	}
 
 	private static int calculateTrappedSnow(int[] a) {
@@ -30,5 +36,29 @@ public class Snowpack {
 		}
 		return answer;
 	}
+	
+	//No Extra Space required.
+	private static int calculateTrappedSnowWithExtraSpace(int[] a) {
+		int trappedWater = 0;
 
+		int left = 0;
+		int right = a.length - 1;
+
+		int maxLeft = a[0];
+		int maxRight = a[a.length - 1];
+		while (left < right) {
+
+			if (a[left] < a[right]) {
+				left++;
+				maxLeft = Math.max(maxLeft, a[left]);
+				trappedWater += maxLeft - a[left];
+			} 
+			else {
+				right--;
+				maxRight = Math.max(maxRight, a[right]);
+				trappedWater += maxRight - a[right];
+			}
+		}
+		return trappedWater;
+	}
 }
